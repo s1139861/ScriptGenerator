@@ -1,0 +1,19 @@
+{
+    "start" : "config system interface",
+	"next" : "next",
+    "end" : "end",
+    "action" : {
+        "edit" : {
+            "name" :                    "edit $name",
+            "vdom" :                    "    set vdom $vdom",
+            "ip" :                      "    set ip $ip",
+            "allowaccess" :             "    set allowaccess $allow_access",
+            "interface " :              "    set interface  $interface ",
+            "vlanid" :                  "    set vlanid $vlanid",
+            "first-member" :            "    ",
+            "second-member" :           "    ",
+            "device-identification" :   "    set device-identification $device-identification",
+            "role" :                    "    set role $role"
+        }
+	}
+}
