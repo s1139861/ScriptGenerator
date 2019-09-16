@@ -1,18 +1,16 @@
 {
-    "vip": {
-        "start" : "config firewall vip",
+    "start" : "config firewall vip",
 	"next" : "next",
-        "end" : "end",
-        "action": {
-            "edit": {
-                "name" :        "edit $name",
-                "extip" :       "    set extip $extip",
-                "extintf" :     "    set extintf $extintf",
-                "portfoward" :  "    set portfoward $portfoward",
-                "mappedip" :    "    set mappedip $mappedip",
-                "extport" :     "    set extport $extport",
-                "mappedport" :  "    set mappedport $mappedport"
-            }
+    "end" : "end",
+    "action" : {
+        "edit" : {
+            "name" :        "edit $name",
+            "extip" :       "    set extip $extip",
+            "extintf" :     "    set extintf $extintf",
+            "portfoward" :  "    set portfoward $portfoward",
+            "mappedip" :    "    set mappedip $mappedip",
+            "extport" :     "    set extport $extport",
+            "mappedport" :  "    set mappedport $mappedport"
         }
-    }
+	}
 }
