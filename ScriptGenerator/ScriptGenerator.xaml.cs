@@ -83,7 +83,7 @@ namespace ScriptGenerator
                     IExcelDataReader reader = null;
                     if (extension == ".xls")
                     {
-                        UpdateResultPreviewBlock(" => XLS格式");
+                        UpdateResultPreviewBlockWithNewLine(" => XLS格式");
                         reader = ExcelReaderFactory.CreateBinaryReader(stream, new ExcelReaderConfiguration()
                         {
                             FallbackEncoding = Encoding.GetEncoding("big5")
@@ -91,12 +91,12 @@ namespace ScriptGenerator
                     }
                     else if (extension == ".xlsx")
                     {
-                        UpdateResultPreviewBlock(" => XLSX格式");
+                        UpdateResultPreviewBlockWithNewLine(" => XLSX格式");
                         reader = ExcelReaderFactory.CreateOpenXmlReader(stream);
                     }
                     else if (extension == ".csv")
                     {
-                        UpdateResultPreviewBlock(" => CSV格式");
+                        UpdateResultPreviewBlockWithNewLine(" => CSV格式");
                         reader = ExcelReaderFactory.CreateCsvReader(stream, new ExcelReaderConfiguration()
                         {
                             FallbackEncoding = Encoding.GetEncoding("big5")
@@ -106,7 +106,7 @@ namespace ScriptGenerator
                     //沒有對應產生任何格式
                     if (reader == null)
                     {
-                        UpdateResultPreviewBlock("未知的處理檔案：" + extension);
+                        UpdateResultPreviewBlockWithNewLine("未知的處理檔案：" + extension);
                     }
                     Console.WriteLine(" => 轉換中");
                     using (reader)
@@ -122,7 +122,7 @@ namespace ScriptGenerator
                             }
                         });
 
-
+                        UpdateResultPreviewBlockWithNewLine("");
                         //把 DataSet 顯示出來
                         var table = ds.Tables[0];
                         for (int row = 0; row < table.Rows.Count; row++)
@@ -132,16 +132,21 @@ namespace ScriptGenerator
                                 string data = table.Rows[row][col].ToString();
                                 UpdateResultPreviewBlock(data + ",");
                             }
-                            UpdateResultPreviewBlock("");
+                            UpdateResultPreviewBlockWithNewLine("");
                         }
                     }
                 }
             }     
         }
 
-        private void UpdateResultPreviewBlock(string text)
+        private void UpdateResultPreviewBlockWithNewLine(string text)
         {
             OutputResult.Text = OutputResult.Text + System.Environment.NewLine + text;
+        }
+
+        private void UpdateResultPreviewBlock(string text)
+        {
+            OutputResult.Text = OutputResult.Text + text;
         }
     }
 }

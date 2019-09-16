@@ -19,3 +19,4 @@ D:\source tree repos\ScriptGenerator\ScriptGenerator\bin\Debug\ExcelDataReader.x
 D:\source tree repos\ScriptGenerator\ScriptGenerator\bin\Debug\ExcelDataReader.DataSet.pdb
 D:\source tree repos\ScriptGenerator\ScriptGenerator\bin\Debug\ExcelDataReader.DataSet.xml
 D:\source tree repos\ScriptGenerator\ScriptGenerator\obj\Debug\ScriptGenerator.csproj.CopyComplete
+D:\source tree repos\ScriptGenerator\ScriptGenerator\obj\Debug\ScriptGenerator.csprojAssemblyReference.cache
