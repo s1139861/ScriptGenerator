@@ -1,16 +1,10 @@
-{
-    "start" : "config firewall vip",
-	"next" : "next",
-    "end" : "end",
-    "action" : {
-        "edit" : {
-            "name" :        "edit $name",
-            "extip" :       "    set extip $extip",
-            "extintf" :     "    set extintf $extintf",
-            "portfoward" :  "    set portfoward $portfoward",
-            "mappedip" :    "    set mappedip $mappedip",
-            "extport" :     "    set extport $extport",
-            "mappedport" :  "    set mappedport $mappedport"
-        }
-	}
-}
+config firewall vip
+edit {name}
+set extintf {extintf}
+set extip {extip}
+set mappedip {mappedip}
+set portforward {portfoward}
+set extport {extport}
+set mapped port {mappedport}
+end
+end

@@ -5,19 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ScriptGenerator"
         mc:Ignorable="d"
-        Title="SciptGenerator" Height="450" Width="800">
+        Title="SciptGenerator" Height="500" Width="800">
     <Grid>
-        <TextBox Name="InputFilePath"  HorizontalAlignment="Left" Height="23" Margin="116,36,0,0" TextWrapping="Wrap" Text="Input file path" VerticalAlignment="Top" Width="462"/>
-        <Label Content="Current File : " HorizontalAlignment="Left" Margin="34,33,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.418,-2.203" Height="26" Width="82"/>
-        <Label Content="Output Path : " HorizontalAlignment="Left" Margin="34,80,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.418,-2.203" Height="26" Width="82"/>
-        <TextBox Name="OutputFilePath" HorizontalAlignment="Left" Height="23" Margin="116,84,0,0" TextWrapping="Wrap" Text="Output file path" VerticalAlignment="Top" Width="462"/>
-        <Button Name="GenerateScript_Btn" Content="Generate Script" HorizontalAlignment="Left" Margin="295,373,0,0" VerticalAlignment="Top" Width="137" Click="GenerateScript_Click"/>
-        <Button Name="BrowseInput_Btn"  Content="Browse" HorizontalAlignment="Left" Margin="598,36,0,0" VerticalAlignment="Top" Width="75" Click="BrowseInput_Click"/>
-        <Button Name="BrowseOutput_Btn" Content="Browse" HorizontalAlignment="Left" Margin="598,87,0,0" VerticalAlignment="Top" Width="75" Click="BrowseOutput_Click"/>
-        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="194" Stroke="Black" VerticalAlignment="Top" Width="732" Margin="34,158,0,0"/>
-        <Label Content="Output Result : " HorizontalAlignment="Left" Margin="34,127,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.418,-2.203" Height="26" Width="104"/>
-        <ScrollViewer HorizontalAlignment="Left" Height="194" Margin="34,158,0,0" VerticalAlignment="Top" Width="732">
-            <TextBlock Name="OutputResult" TextWrapping="Wrap" Text="Sample Output Result Preview" Width="700"/>
+        <TextBox Name="InputFilePath"  HorizontalAlignment="Left" Height="23" Margin="118,84,0,0" TextWrapping="Wrap" Text="Input file path" VerticalAlignment="Top" Width="462"/>
+        <Label Content="Current File : " HorizontalAlignment="Left" Margin="36,81,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.418,-2.203" Height="26" Width="82"/>
+        <Label Content="Output Path : " HorizontalAlignment="Left" Margin="36,128,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.418,-2.203" Height="26" Width="82"/>
+        <TextBox Name="OutputFilePath" HorizontalAlignment="Left" Height="23" Margin="118,132,0,0" TextWrapping="Wrap" Text="Output file path" VerticalAlignment="Top" Width="462"/>
+        <Button Name="GenerateScript_Btn" Content="Generate Script" HorizontalAlignment="Left" Margin="297,421,0,0" VerticalAlignment="Top" Width="137" Click="GenerateScript_Click"/>
+        <Button Name="BrowseInput_Btn"  Content="Browse" HorizontalAlignment="Left" Margin="600,84,0,0" VerticalAlignment="Top" Width="75" Click="BrowseInput_Click"/>
+        <Button Name="BrowseOutput_Btn" Content="Browse" HorizontalAlignment="Left" Margin="600,135,0,0" VerticalAlignment="Top" Width="75" Click="BrowseOutput_Click"/>
+        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="194" Stroke="Black" VerticalAlignment="Top" Width="732" Margin="36,206,0,0"/>
+        <Label Content="Output Result : " HorizontalAlignment="Left" Margin="36,175,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.418,-2.203" Height="26" Width="104"/>
+        <ScrollViewer HorizontalAlignment="Left" Height="194" Margin="36,206,0,0" VerticalAlignment="Top" Width="732">
+            <TextBlock Name="OutputResult" TextWrapping="Wrap" Text="" Width="700"/>
         </ScrollViewer>
+        <TextBox x:Name="TemplateFilePath"  HorizontalAlignment="Left" Height="23" Margin="118,34,0,0" TextWrapping="Wrap" Text="Template file path" VerticalAlignment="Top" Width="462"/>
+        <Label Content="Template : " HorizontalAlignment="Left" Margin="36,31,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.418,-2.203" Height="26" Width="82"/>
+        <Button x:Name="BrowseTemplate_Btn"  Content="Browse" HorizontalAlignment="Left" Margin="600,34,0,0" VerticalAlignment="Top" Width="75" Click="BrowseTemplate_Click"/>
     </Grid>
 </Window>

@@ -5,6 +5,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -70,9 +71,31 @@ namespace ScriptGenerator
             }
         }
 
+        private void BrowseTemplate_Click(object sender, RoutedEventArgs e)
+        {
+            // Create OpenFileDialog
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+            // Set filter for file extension and default file extension
+            dlg.DefaultExt = "*.txt";
+            dlg.Filter = "Text|*.txt|All|*.*";
+
+            // Display OpenFileDialog by calling ShowDialog method
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Get the selected file name and display in a TextBox
+            if (result == true)
+            {
+                // Open document
+                string filename = dlg.FileName;
+                TemplateFilePath.Text = filename;
+            }
+        }
+
         private void GenerateScript_Click(object sender, RoutedEventArgs e)
         {
             DataSet ds = new DataSet();
+            string templatepath = TemplateFilePath.Text;
             string inputfilepath = InputFilePath.Text;
             if (File.Exists(inputfilepath))
             {
@@ -136,7 +159,23 @@ namespace ScriptGenerator
                         }
                     }
                 }
-            }     
+            }
+            if (File.Exists(templatepath))
+            {
+                //string filename = System.IO.Path.GetFileNameWithoutExtension(templatepath);
+                string line;
+                StreamReader file = new StreamReader(templatepath);
+                while ((line = file.ReadLine()) != null)
+                {
+                    Match reMatch = Regex.Match(line, @"\{([^}]*)\}");
+                    int i = 0;
+                    while(reMatch.Groups[++i].Value != "")
+                    {
+                        UpdateResultPreviewBlockWithNewLine(reMatch.Groups[1].Value);
+                    }
+                }
+            }
+
         }
 
         private void UpdateResultPreviewBlockWithNewLine(string text)
