@@ -1,4 +1,5 @@
 ﻿using ExcelDataReader;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -77,8 +78,8 @@ namespace ScriptGenerator
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
 
             // Set filter for file extension and default file extension
-            dlg.DefaultExt = "*.txt";
-            dlg.Filter = "Text|*.txt|All|*.*";
+            dlg.DefaultExt = "*.json";
+            dlg.Filter = "JSON|*.json|All|*.*";
 
             // Display OpenFileDialog by calling ShowDialog method
             Nullable<bool> result = dlg.ShowDialog();
@@ -106,7 +107,7 @@ namespace ScriptGenerator
                     IExcelDataReader reader = null;
                     if (extension == ".xls")
                     {
-                        UpdateResultPreviewBlockWithNewLine(" => XLS格式");
+                        //UpdateResultPreviewBlockWithNewLine(" => XLS格式");
                         reader = ExcelReaderFactory.CreateBinaryReader(stream, new ExcelReaderConfiguration()
                         {
                             FallbackEncoding = Encoding.GetEncoding("big5")
@@ -114,12 +115,12 @@ namespace ScriptGenerator
                     }
                     else if (extension == ".xlsx")
                     {
-                        UpdateResultPreviewBlockWithNewLine(" => XLSX格式");
+                        //UpdateResultPreviewBlockWithNewLine(" => XLSX格式");
                         reader = ExcelReaderFactory.CreateOpenXmlReader(stream);
                     }
                     else if (extension == ".csv")
                     {
-                        UpdateResultPreviewBlockWithNewLine(" => CSV格式");
+                        //UpdateResultPreviewBlockWithNewLine(" => CSV格式");
                         reader = ExcelReaderFactory.CreateCsvReader(stream, new ExcelReaderConfiguration()
                         {
                             FallbackEncoding = Encoding.GetEncoding("big5")
@@ -147,7 +148,8 @@ namespace ScriptGenerator
 
                         UpdateResultPreviewBlockWithNewLine("");
                         //把 DataSet 顯示出來
-                        var table = ds.Tables[0];
+                        /*
+                        var table = ds.Tables["abc"];
                         for (int row = 0; row < table.Rows.Count; row++)
                         {
                             for (var col = 0; col < table.Columns.Count; col++)
@@ -157,30 +159,67 @@ namespace ScriptGenerator
                             }
                             UpdateResultPreviewBlockWithNewLine("");
                         }
+                        */
                     }
                 }
             }
+            else
+            {
+                UpdateResultPreviewBlockWithNewLine("Input file not found");
+                return;
+            }
             if (File.Exists(templatepath))
             {
-                //string filename = System.IO.Path.GetFileNameWithoutExtension(templatepath);
-                string line;
-                StreamReader file = new StreamReader(templatepath);
-                while ((line = file.ReadLine()) != null)
+                //load template
+                dynamic template = JsonConvert.DeserializeObject(ReadTemplate(templatepath));
+                //get excel worksheet name (after first "_" in template filename)
+                string filename = System.IO.Path.GetFileNameWithoutExtension(templatepath);
+                string sheetName = Regex.Match(filename, @".*?_(.*)").Groups[1].Value;
+                var table = ds.Tables[sheetName];
+                UpdateResultPreviewBlockWithNewLine("" + template.start);
+                for (int row = 1; row < table.Rows.Count; row++)
                 {
-                    Match reMatch = Regex.Match(line, @"\{([^}]*)\}");
-                    int i = 0;
-                    while(reMatch.Groups[++i].Value != "")
+                    string action = table.Rows[row][0].ToString();
+                    for (var col = 1; col < table.Columns.Count; col++)
                     {
-                        UpdateResultPreviewBlockWithNewLine(reMatch.Groups[1].Value);
+                        string paramName = table.Rows[0][col].ToString();
+                        string data = table.Rows[row][col].ToString().Trim();
+                        if (data == "")
+                            continue;
+                        string cmdLine;
+                        cmdLine = "" + template.action[action][paramName];
+
+                        if(cmdLine=="")
+                            continue;
+
+                        UpdateResultPreviewBlockWithNewLine(cmdLine.Trim().Replace("$"+paramName,data));
                     }
+                    if((row+1) < table.Rows.Count)
+                        UpdateResultPreviewBlockWithNewLine(""+ template.next);
                 }
+                UpdateResultPreviewBlockWithNewLine("" + template.end);
+            }
+            else
+            {
+                UpdateResultPreviewBlockWithNewLine("Template file not found");
+                return;
             }
 
         }
 
+        private string ReadTemplate(string path)
+        {
+            string json;
+            using (StreamReader r = new StreamReader(path))
+            {
+                json = r.ReadToEnd();
+            }
+            return json;
+        }
+
         private void UpdateResultPreviewBlockWithNewLine(string text)
         {
-            OutputResult.Text = OutputResult.Text + System.Environment.NewLine + text;
+            OutputResult.Text = OutputResult.Text + text + System.Environment.NewLine;
         }
 
         private void UpdateResultPreviewBlock(string text)

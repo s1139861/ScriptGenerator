@@ -1,7 +1,8 @@
 config firewall vip
 edit {name}
+set uuid {uuid}
 set extintf {extintf}
-set extip {extip}
+set extip {extip} {xxxxxxxxxxxxxxxxxxx}
 set mappedip {mappedip}
 set portforward {portfoward}
 set extport {extport}
