@@ -51,27 +51,6 @@ namespace ScriptGenerator
             }
         }
 
-        private void BrowseOutput_Click(object sender, RoutedEventArgs e)
-        {
-            // Create OpenFileDialog
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-
-            // Set filter for file extension and default file extension
-            dlg.DefaultExt = "*.xls";
-            dlg.Filter = "Excel Worksheets|*.xls;*.xlsx;*.csv";
-
-            // Display OpenFileDialog by calling ShowDialog method
-            Nullable<bool> result = dlg.ShowDialog();
-
-            // Get the selected file name and display in a TextBox
-            if (result == true)
-            {
-                // Open document
-                string filename = dlg.FileName;
-                OutputFilePath.Text = filename;
-            }
-        }
-
         private void BrowseTemplate_Click(object sender, RoutedEventArgs e)
         {
             // Create OpenFileDialog
@@ -95,6 +74,7 @@ namespace ScriptGenerator
 
         private void GenerateScript_Click(object sender, RoutedEventArgs e)
         {
+            OutputResult.Text = "";
             DataSet ds = new DataSet();
             string templatepath = TemplateFilePath.Text;
             string inputfilepath = InputFilePath.Text;
@@ -145,8 +125,6 @@ namespace ScriptGenerator
                                 UseHeaderRow = false
                             }
                         });
-
-                        UpdateResultPreviewBlockWithNewLine("");
                         //把 DataSet 顯示出來
                         /*
                         var table = ds.Tables["abc"];
@@ -198,6 +176,20 @@ namespace ScriptGenerator
                         UpdateResultPreviewBlockWithNewLine(""+ template.next);
                 }
                 UpdateResultPreviewBlockWithNewLine("" + template.end);
+                Microsoft.Win32.SaveFileDialog sfd = new Microsoft.Win32.SaveFileDialog();
+                sfd.Filter = "TXT File|*.txt";
+                sfd.Title = "Save generated script";
+                sfd.ShowDialog();
+
+                // if not empty then save
+                if (sfd.FileName != "")
+                {
+                    using (StreamWriter w = new StreamWriter(sfd.FileName))
+                    {
+                        w.Write(OutputResult.Text);
+                    }
+
+                }
             }
             else
             {

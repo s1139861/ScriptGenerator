@@ -1,0 +1,32 @@
+config firewall policy
+edit 4340
+set name CTSDS_DTS_0001
+set dstintf Int_APP
+set srcaddr "Corp_OA_Network"
+set dstaddr 10.244.129.41
+set action accept
+set schedule always
+set service TCP_22 TCP_139 TCP_445 UDP_137 UDP_138
+set logtraffic all
+next
+edit 4341
+set name CTSDS_DTS_0003
+set dstintf Int_APP
+set srcaddr 192.168.37.11-192.168.37.15
+192.168.57.11-15
+set dstaddr 10.244.129.41
+set action accept
+set schedule always
+set service TCP_139 TCP_445 UDP_137 UDP_138
+set logtraffic all
+next
+edit 4342
+set name CTSDS_DTS_0005
+set dstintf Int_APP
+set srcaddr 10.63.142.128/25
+set dstaddr 10.244.128.41
+set action accept
+set schedule always
+set service TCP_3389
+set logtraffic all
+end

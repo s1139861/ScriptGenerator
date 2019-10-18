@@ -10,7 +10,7 @@
 			"dstintf" : 	        "set dstintf $dstintf",
 			"srcaddr" : 	        "set srcaddr $srcaddr",
 			"dstaddr" : 	        "set dstaddr $dstaddr",
-			"policy_action" :       "set action $policy",
+			"policy_action" :       "set action $policy_action",
 			"schedule" : 	        "set schedule $schedule",
 			"service" : 	        "set service $service",
 			"nat" : 		        "set nat $nat",
